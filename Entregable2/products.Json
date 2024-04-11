@@ -11,20 +11,20 @@
   {
     "title": "Producto 2",
     "description": "Descripción 2",
-    "price": 200,
+    "price": 22,
     "thumbnail": "ruta/imagen2",
     "code": "cod2",
     "stock": 5,
     "id": 2
   },
   {
-    "title": "Producto 3",
-    "description": "Descripción 3",
+    "title": "Producto 4",
+    "description": "Descripción 4",
     "price": 150,
-    "thumbnail": "ruta/imagen3",
-    "code": "cod3",
+    "thumbnail": "ruta/imagen4",
+    "code": "cod4",
     "stock": 20,
-    "id": 3
+    "id": 4
   },
   {
     "title": "Producto 4",

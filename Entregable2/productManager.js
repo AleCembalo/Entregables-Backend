@@ -68,6 +68,20 @@ class ProductManager {
             console.error("Error al eliminar el producto:", error);
         }
     }
+
+    async updated (id, updatedProd) {
+        const productIndex = this.products.findIndex((p) => p.id === id);
+        if (productIndex !== -1) {
+            const updated = { ...this.products[productIndex], ...updatedProd };
+            this.products[productIndex] = updated;
+
+            this.writeFile();
+            console.log("Producto actualizado correctamente");
+            
+        } else {
+            throw new Error("Producto no encontrado");
+        }
+    }
 }    
 
 
@@ -123,5 +137,13 @@ console.log(productManager);
 const producto = productManager.getProductById(1);
 console.log(producto);
 
-// const prod = productManager.deleteById(2);
-// console.log (prod);
+// borrar producto por ID
+
+productManager.deleteById(3);
+console.log (productManager);
+
+// actualizar producto
+
+productManager.updated(2, {
+    price: 22
+});
