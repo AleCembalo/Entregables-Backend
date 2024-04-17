@@ -1,3 +1,4 @@
+
 import fs from 'fs';
 
 class ProductManager {
@@ -11,7 +12,7 @@ class ProductManager {
     async writeFile() {
 
         try {
-            const data = JSON.stringify(this.products, null, 2);
+            const data = JSON.stringify(this.products, 'utf-8');
             await fs.promises.writeFile(this.path, data);
         } catch (err) {
             console.error(err.message)
@@ -29,7 +30,7 @@ class ProductManager {
     }
 
     async addProduct(product) {
-        await this.getProducts();
+        await this.getProducts(0);
         const exist = this.products.some((p) => p.code === product.code);
 
         if (product.title && product.description && product.price && product.thumbnail &&
@@ -47,17 +48,16 @@ class ProductManager {
         }
     }
 
-    async getProducts() {
+    async getProducts(limit) {
         await this.readFile();
-        return this.products;
+        return limit === 0 ? this.products : this.products.slice (0, limit);
+
     }
 
     getProductById(id) {
-        const product = this.products.find((p) => p.id === id);
+        const product = this.products.find((p) => p.id === +id) || {};
         return product;
     }
-
-    
 
     async deleteById(id) {
         const updatedProducts = this.products.filter((product) => product.id !== id);
@@ -90,13 +90,14 @@ class ProductManager {
     }
 }
 
+export default ProductManager;
 
 
 const productManager = new ProductManager();
 
 // Agregar productos
 
-// await productManager.addProduct({
+// productManager.addProduct({
 //     title: "Producto 1",
 //     description: "Descripción 1",
 //     price: 100,
@@ -105,7 +106,7 @@ const productManager = new ProductManager();
 //     stock: 10,
 // });
 
-// await productManager.addProduct({
+// productManager.addProduct({
 //     title: "Producto 2",
 //     description: "Descripción 2",
 //     price: 200,
@@ -114,7 +115,7 @@ const productManager = new ProductManager();
 //     stock: 5,
 // });
 
-// await productManager.addProduct({
+// productManager.addProduct({
 //     title: "Producto 3",
 //     description: "Descripción 3",
 //     price: 150,
@@ -123,7 +124,7 @@ const productManager = new ProductManager();
 //     stock: 20,
 // });
 
-// await productManager.addProduct({
+// productManager.addProduct({
 //     title: "Producto 4",
 //     description: "Descripción 4",
 //     price: 150,
@@ -135,8 +136,7 @@ const productManager = new ProductManager();
 
 // mostrar productos agregados
 
-console.log (await productManager.getProducts());
-// console.log(productManager.products);
+// console.log (await productManager.getProducts(2));
 
 // mostrar productos por ID
 
@@ -146,8 +146,8 @@ console.log (await productManager.getProducts());
 // borrar producto por ID
 
 
-// productManager.deleteById(1);
-// console.log(prodId);
+// const prodId = productManager.deleteById(1);
+// console.log(await prodId);
 
 // actualizar producto
 
