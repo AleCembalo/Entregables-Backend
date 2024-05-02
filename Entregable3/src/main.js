@@ -93,7 +93,7 @@ class ProductManager {
 export default ProductManager;
 
 
-const productManager = new ProductManager();
+// const productManager = new ProductManager();
 
 // Agregar productos
 
